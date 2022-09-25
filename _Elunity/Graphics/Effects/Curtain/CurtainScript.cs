@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 
-namespace Ilang
+namespace Elang
 {
     public class CurtainScript : MonoBehaviour
     {
@@ -23,27 +23,24 @@ namespace Ilang
         TransitionEvent fadeOut;
 
         [SerializeField]
-        float transitionDelaySeconds;
+        float transitionDelay;
         [SerializeField]
         string nextScene;
 
         void Start() {
             Image curtain = GetComponentInChildren<Image>();
-
-            var tr = curtain.GetComponent<RectTransform>();
-            if (Screen.width > Screen.height) {
-                tr.localScale = new Vector3(tr.localScale.x, (float)Screen.width / (float)Screen.height, tr.localScale.z);
-            } else {
-                tr.localScale = new Vector3((float)Screen.height / (float)Screen.width, tr.localScale.y, tr.localScale.z);
-            }
-
             fadeIn.SetupImage(curtain);
             fadeOut.SetupImage(curtain);
             if (preserveRatio)
                 TransitionEvent.PreserveRatio(curtain);
-
             if (fadeInImmediately)
                 FadeIn();
+
+            if (!fadeIn.referenceCamera)
+                fadeIn.referenceCamera = GetComponentInChildren<Camera>();
+            if (!fadeOut.referenceCamera)
+                fadeOut.referenceCamera = GetComponentInChildren<Camera>();
+
         }
 
         public void FadeIn() {
@@ -56,7 +53,7 @@ namespace Ilang
 
         IEnumerator FadeOutCO() {
             yield return StartCoroutine(fadeOut.FadeInCO(preserveRatio));
-            //yield return new WaitForSeconds(transitionDelaySeconds);
+            yield return new WaitForSeconds(transitionDelay);
             SceneManager.LoadSceneAsync(nextScene);
 
         }

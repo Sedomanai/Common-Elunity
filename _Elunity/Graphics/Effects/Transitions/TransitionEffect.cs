@@ -1,19 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 
-namespace Ilang
+namespace Elang
 {
-    [System.Serializable]
-    public class TransitionEvent
-    {
+    [CreateAssetMenu(fileName = "Transition Effect", menuName = "Elang UI/Transition", order = 12)]
+    public class TransitionEffect : ScriptableObject {
         public float duration = 1.0f;
-
-        //[Header("")]
-        //public bool useRawValue = false;
 
         [Header("Cutoff")]
         public bool useCutoff = false;
@@ -38,35 +30,10 @@ namespace Ilang
         public Animator animator;
         public AnimationClip animation;
 
-        [Header("Events")]
-        [Space(10)]
-        public UnityEvent beginAction;
-        [SerializeField]
-        public UnityEvent endAction;
 
-        Image image;
-        Material mat;
-
-        float _cutoff;
-        public float cutoff { get; }
-
-        public static void PreserveRatio(Image image) {
-            var tr = image.GetComponent<RectTransform>();
-            if (Screen.width > Screen.height) {
-                tr.localScale = new Vector3(tr.localScale.x, (float)Screen.width / (float)Screen.height, tr.localScale.z);
-            } else {
-                tr.localScale = new Vector3((float)Screen.height / (float)Screen.width, tr.localScale.y, tr.localScale.z);
-            }
-        }
-
-        public void SetupImage(Image image) {
-            this.image = image;
-            mat = image.material;
-        }
-
-        void ReadyTransition() {
-            beginAction.Invoke();
-
+        float _cutoff = 0.0f;
+        //public float cutoff { get; }
+        public void ReadyTransition(Material mat) {
             if (mat) {
                 mat.SetFloat("_Slider", 1.0f);
                 if (useCutoff) {
@@ -97,10 +64,8 @@ namespace Ilang
             }
         }
 
-        public IEnumerator FadeOutCO(bool preserveRatio = false) {
-            ReadyTransition();
-            image.enabled = true;
 
+        public IEnumerator FadeOutEffect(Material mat, Camera cam, bool preserveRatio) {
             if (useCutoff || useMask) {
                 _cutoff = 1.0f;
                 if (mat)
@@ -111,7 +76,7 @@ namespace Ilang
                     if (mat) {
                         mat.SetFloat("_Slider", _cutoff);
                         if (maskPivot) {
-                            mat.SetVector("_MaskOffset", OffsetPoint(maskPivot, preserveRatio));
+                            mat.SetVector("_MaskOffset", OffsetPoint(maskPivot, cam, preserveRatio));
                         }
                     }
 
@@ -126,14 +91,10 @@ namespace Ilang
                 yield return new WaitForSeconds(duration);
 
             StopParticles();
-            image.enabled = false;
-            endAction.Invoke();
         }
 
-        public IEnumerator FadeInCO(bool preserveRatio = false) {
-            ReadyTransition();
-            image.enabled = true;
 
+        public IEnumerator FadeInEffect(Material mat, Camera cam, bool preserveRatio) {
             if (useCutoff || useMask) {
                 _cutoff = 0.0f;
                 if (mat)
@@ -144,7 +105,7 @@ namespace Ilang
                     if (mat) {
                         mat.SetFloat("_Slider", _cutoff);
                         if (maskPivot) {
-                            mat.SetVector("_MaskOffset", OffsetPoint(maskPivot, preserveRatio));
+                            mat.SetVector("_MaskOffset", OffsetPoint(maskPivot, cam, preserveRatio));
                         }
                     }
 
@@ -159,14 +120,6 @@ namespace Ilang
                 yield return new WaitForSeconds(duration);
 
             StopParticles();
-            endAction.Invoke();
-        }
-
-        public IEnumerator TransitionCO() {
-            ReadyTransition();
-            yield return new WaitForSeconds(duration);
-            StopParticles();
-            endAction.Invoke();
         }
 
         void StopParticles() {
@@ -177,8 +130,13 @@ namespace Ilang
             }
         }
 
-        Vector2 OffsetPoint(Transform tr, bool preserveRatio = false) {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(tr.position);
+        public IEnumerator TransitionWait() {
+            yield return new WaitForSeconds(duration);
+            StopParticles();
+        }
+
+        Vector2 OffsetPoint(Transform tr, Camera cam, bool preserveRatio = false) {
+            Vector3 screenPos = cam.WorldToScreenPoint(tr.position);
 
             float yFactor = (preserveRatio && (Screen.width > Screen.height)) ?
                           (float)Screen.height / (float)Screen.width : 1.0f;
@@ -189,4 +147,5 @@ namespace Ilang
             return screenPos;
         }
     }
+
 }

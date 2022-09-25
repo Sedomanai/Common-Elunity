@@ -3,6 +3,6 @@
 Custom common unity scripts that is useful in any project development settings/environment. 
 2D, 3D, URP, HDRP, you name it. 
 
-## Triggers 
+## Documentation On Hold Indefinitely
 
-Triggers... (pending)
+Will postpone until all other pressing matters are addresesed.
