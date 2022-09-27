@@ -22,9 +22,17 @@ namespace Elang
         [SerializeField]
         GameObject _object;
         [SerializeField]
-        GameObject _container;
+        Transform _container;
+        [SerializeField]
+        bool _resetTransform = true;
 
         List<GameObject> _pool = new List<GameObject>();
+
+        void Awake() {
+            if (!_container)
+                _container = transform;
+        }
+
 
         /// <summary>
         /// <br> Pull an existing disabled GameObject to recycle.</br>
@@ -52,10 +60,11 @@ namespace Elang
         }
 
         void ResetTransform(Transform tr) {
-            tr.position = transform.position;
-            tr.eulerAngles = transform.eulerAngles;
-            if (_container)
-                tr.SetParent(_container.transform);
+            if (_resetTransform) {
+                tr.position = transform.position;
+                tr.eulerAngles = transform.eulerAngles;
+            }
+            tr.SetParent(_container);
         }
 
         public ObjectPool SetObject(GameObject obj) {

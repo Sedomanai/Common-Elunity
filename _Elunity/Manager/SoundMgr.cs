@@ -220,9 +220,8 @@ namespace Elang {
             }
         }
         public void PlaySFX(AudioClip clip) {
-            _sfxSource.PlayOneShot(clip, 1.0f);
+            _sfxSource.PlayOneShot(clip, _sfxMax / 500.0f);
         }
-        //SFX 여러 사운드 중복 적용 가능
         public void PlaySFX(string name) {
             _sfxSource.PlayOneShot(_sfx[name], _sfxMax / 500.0f);
         }

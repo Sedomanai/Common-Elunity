@@ -12,7 +12,7 @@ namespace Elang {
         Dictionary<string, Stopwatch> _watches = new Dictionary<string, Stopwatch>();
 
         [SerializeField]
-        float _timeScale = 0.0f;
+        float _timeScale = 1.0f;
 
         protected override void Init() {
             name = "[Timer Manager]";
