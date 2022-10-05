@@ -37,7 +37,9 @@ namespace Elang
         [SerializeField]
         bool useSkip;
         [SerializeField]
+#if UNITY_EDITOR
         [ShowIf(ActionOnConditionFail.DontDraw, ConditionOperator.And, nameof(useSkip))]
+#endif
         int skipCharacterThreshold = 8;
 
         public DialogueScriptableObject dialogue;

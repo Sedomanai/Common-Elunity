@@ -1,5 +1,6 @@
 
 
+/*
 using System;
 using System.Reflection;
 using System.IO;
@@ -241,4 +242,4 @@ namespace Elang
             this.functionName = functionName;
         }
     }
-}
+}*/

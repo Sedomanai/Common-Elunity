@@ -87,7 +87,7 @@ namespace Elang {
                     new Vector2(timeMarker.loopStart, timeMarker.loopEnd);
 
                 // if timeline reached the end of the audio (without pausing/stopping) then loop
-                if (!giver.isPlaying || giver.time >= loopPoint.y) {
+                if (giver.time >= loopPoint.y || (!giver.isPlaying && giver.time == 0.0f)) {
                     receiver.volume = giver.volume;
                     receiver.clip = clip;
                     receiver.time = loopPoint.x;
@@ -134,6 +134,7 @@ namespace Elang {
             surefirePath(ref _BGMDirectory);
             surefirePath(ref _SFXDirectory);
             _sfxSource = gameObject.AddComponent<AudioSource>();
+            sfxMax = 500.0f;
             _port.Init(gameObject, 0);
 
             var sfx = Resources.LoadAll<AudioClip>(_SFXDirectory);
@@ -142,7 +143,12 @@ namespace Elang {
             }
 
             ParseMarker();
-            SceneManager.sceneLoaded += AdjustToCamera;
+            
+
+            //This interferes with the scope of the life
+            //Moreover this is hardly necessary
+
+            //SceneManager.sceneLoaded += AdjustToCamera;
         }
 
         void ParseMarker() {
