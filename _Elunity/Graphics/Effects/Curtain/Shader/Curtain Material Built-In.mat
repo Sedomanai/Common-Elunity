@@ -89,7 +89,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Shininess: 0.2
-    - _Slider: -0.00037702767
+    - _Slider: -0.0011324255
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
