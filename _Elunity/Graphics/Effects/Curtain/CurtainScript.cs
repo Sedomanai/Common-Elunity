@@ -16,6 +16,10 @@ namespace Elang
         bool fadeInImmediately = true;
         [SerializeField]
         bool preserveRatio = false;
+        [SerializeField]
+        Transform _maskPivot;
+        [SerializeField]
+        Camera _maskReferenceCamera;
 
         [SerializeField]
         TransitionEvent fadeIn;
@@ -27,29 +31,22 @@ namespace Elang
         [SerializeField]
         string nextScene;
 
-        [SerializeField]
-        Transform _maskPivot;
 
         void Start() {
             Image curtain = GetComponentInChildren<Image>();
             Animator anim = GetComponentInChildren<Animator>();
             ParticleSystem particles = GetComponentInChildren<ParticleSystem>();
 
-            fadeIn.Setup(curtain, _maskPivot, particles, anim);
-            fadeOut.Setup(curtain, _maskPivot, particles, anim);
+            fadeIn.Setup(curtain, particles, anim);
+            fadeOut.Setup(curtain, particles, anim);
             if (preserveRatio)
                 TransitionEvent.PreserveRatio(curtain);
             if (fadeInImmediately)
                 FadeIn();
-
-            if (!fadeIn.referenceCamera)
-                fadeIn.referenceCamera = GetComponentInChildren<Camera>();
-            if (!fadeOut.referenceCamera)
-                fadeOut.referenceCamera = GetComponentInChildren<Camera>();
         }
 
         public void FadeIn() {
-            StartCoroutine(fadeIn.FadeOutCO(preserveRatio));
+            StartCoroutine(fadeIn.FadeOutCO(preserveRatio, _maskReferenceCamera, _maskPivot));
         }
 
         public void FadeOut() {
@@ -57,7 +54,7 @@ namespace Elang
         }
 
         IEnumerator FadeOutCO() {
-            yield return StartCoroutine(fadeOut.FadeInCO(preserveRatio));
+            yield return StartCoroutine(fadeOut.FadeInCO(preserveRatio, _maskReferenceCamera, _maskPivot));
             yield return new WaitForSeconds(transitionDelay);
             SceneManager.LoadSceneAsync(nextScene);
 

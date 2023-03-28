@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d7618af8bbe3884f95c7f8c2b3f8bc7, type: 3}
-  m_Name: Fade
+  m_Name: Circle Mask
   m_EditorClassIdentifier: 
-  duration: 1
-  useCutoff: 1
+  duration: 2
+  useCutoff: 0
   cutoffInversion: 0
-  cutoffSmoothFactor: 2
-  cutoffTexture: {fileID: 2800000, guid: 75c3e0a8277f407449f481e689119420, type: 3}
+  cutoffSmoothFactor: 0
+  cutoffTexture: {fileID: 0}
   useMask: 1
-  maskMaxScale: 4
-  maskTexture: {fileID: 2800000, guid: 2762abf315cd3e349b67d2005d6ac6db, type: 3}
+  maskMaxScale: 7.2
+  maskTexture: {fileID: 2800000, guid: f685d50dac6a10d4290034b66b1afa9c, type: 3}

@@ -15,8 +15,6 @@ namespace Elang
         [SerializeField]
         AnimationClip _animClip;
 
-        public Camera referenceCamera;
-
         [Header("Events")]
         [Space(10)]
         public UnityEvent beginAction;
@@ -28,13 +26,11 @@ namespace Elang
         ParticleSystem _particles;
         Animator _anim;
         Material _mat;
-        Transform _maskPivot;
 
-        public void Setup(Image image, Transform maskPivot = null, ParticleSystem particles = null, Animator anim = null) {
-            this._image = image;
-            this._particles = particles;
-            this._maskPivot = maskPivot;
-            this._anim = anim;
+        public void Setup(Image image, ParticleSystem particles = null, Animator anim = null) {
+            _image = image;
+            _particles = particles;
+            _anim = anim;
             _mat = image.material;
         }
 
@@ -51,19 +47,19 @@ namespace Elang
             _effect.ReadyTransition(_mat, _particles, _anim, _animClip);
         }
 
-        public IEnumerator FadeOutCO(bool preserveRatio = false) {
+        public IEnumerator FadeOutCO(bool preserveRatio = false, Camera referenceCamera = null, Transform maskPivot = null) {
             ReadyTransition();
             _image.enabled = true;
-            yield return _effect.FadeOutEffect(_mat, referenceCamera, preserveRatio, _maskPivot);
+            yield return _effect.FadeOutEffect(_mat, referenceCamera, preserveRatio, maskPivot);
             _image.enabled = false;
             yield return new WaitForSeconds(0.02f);
             endAction.Invoke();
         }
 
-        public IEnumerator FadeInCO(bool preserveRatio = false) {
+        public IEnumerator FadeInCO(bool preserveRatio = false, Camera referenceCamera = null, Transform maskPivot = null) {
             ReadyTransition();
             _image.enabled = true;
-            yield return _effect.FadeInEffect(_mat, referenceCamera, preserveRatio, _maskPivot);
+            yield return _effect.FadeInEffect(_mat, referenceCamera, preserveRatio, maskPivot);
             yield return new WaitForSeconds(0.02f);
             endAction.Invoke();
         }

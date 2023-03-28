@@ -34,7 +34,7 @@ namespace Elang
                 if (useMask) {
                     mat.SetTexture("_MaskTex", maskTexture);
                     mat.SetFloat("_MaskMaxScale", maskMaxScale);
-                    mat.SetVector("_MaskOffset", new Vector2(0, 0));
+                    mat.SetVector("_MaskOffset", new Vector2(0.0f, 0.0f));
                 } else {
                     mat.SetTexture("_MaskTex", null);
                 }
@@ -65,7 +65,7 @@ namespace Elang
                 while (true) {
                     if (mat) {
                         mat.SetFloat("_Slider", _cutoff);
-                        if (maskPivot) {
+                        if (maskPivot && cam) {
                             mat.SetVector("_MaskOffset", OffsetPoint(maskPivot, cam, preserveRatio));
                         }
                     }
@@ -94,7 +94,7 @@ namespace Elang
                 while (true) {
                     if (mat) {
                         mat.SetFloat("_Slider", _cutoff);
-                        if (maskPivot) {
+                        if (maskPivot && cam) {
                             mat.SetVector("_MaskOffset", OffsetPoint(maskPivot, cam, preserveRatio));
                         }
                     }
