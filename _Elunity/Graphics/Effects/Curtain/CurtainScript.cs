@@ -27,10 +27,16 @@ namespace Elang
         [SerializeField]
         string nextScene;
 
+        [SerializeField]
+        Transform _maskPivot;
+
         void Start() {
             Image curtain = GetComponentInChildren<Image>();
-            fadeIn.SetupImage(curtain);
-            fadeOut.SetupImage(curtain);
+            Animator anim = GetComponentInChildren<Animator>();
+            ParticleSystem particles = GetComponentInChildren<ParticleSystem>();
+
+            fadeIn.Setup(curtain, _maskPivot, particles, anim);
+            fadeOut.Setup(curtain, _maskPivot, particles, anim);
             if (preserveRatio)
                 TransitionEvent.PreserveRatio(curtain);
             if (fadeInImmediately)
@@ -40,7 +46,6 @@ namespace Elang
                 fadeIn.referenceCamera = GetComponentInChildren<Camera>();
             if (!fadeOut.referenceCamera)
                 fadeOut.referenceCamera = GetComponentInChildren<Camera>();
-
         }
 
         public void FadeIn() {

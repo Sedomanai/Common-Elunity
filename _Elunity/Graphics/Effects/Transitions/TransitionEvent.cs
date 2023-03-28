@@ -9,10 +9,11 @@ using UnityEngine.Events;
 namespace Elang
 {
     [Serializable]
-    public class TransitionEvent
-    {
+    public class TransitionEvent {
         [SerializeField]
         TransitionEffect _effect;
+        [SerializeField]
+        AnimationClip _animClip;
 
         public Camera referenceCamera;
 
@@ -22,12 +23,19 @@ namespace Elang
         [SerializeField]
         public UnityEvent endAction;
 
-        Image image;
-        Material mat;
 
-        void ReadyTransition() {
-            beginAction.Invoke();
-            _effect.ReadyTransition(mat);
+        Image _image;
+        ParticleSystem _particles;
+        Animator _anim;
+        Material _mat;
+        Transform _maskPivot;
+
+        public void Setup(Image image, Transform maskPivot = null, ParticleSystem particles = null, Animator anim = null) {
+            this._image = image;
+            this._particles = particles;
+            this._maskPivot = maskPivot;
+            this._anim = anim;
+            _mat = image.material;
         }
 
         public static void PreserveRatio(Image image) {
@@ -38,25 +46,24 @@ namespace Elang
                 tr.localScale = new Vector3((float)Screen.height / (float)Screen.width, tr.localScale.y, tr.localScale.z);
             }
         }
-
-        public void SetupImage(Image image) {
-            this.image = image;
-            mat = image.material;
+        void ReadyTransition() {
+            beginAction.Invoke();
+            _effect.ReadyTransition(_mat, _particles, _anim, _animClip);
         }
 
         public IEnumerator FadeOutCO(bool preserveRatio = false) {
             ReadyTransition();
-            image.enabled = true;
-            yield return _effect.FadeOutEffect(mat, referenceCamera, preserveRatio);
-            image.enabled = false;
+            _image.enabled = true;
+            yield return _effect.FadeOutEffect(_mat, referenceCamera, preserveRatio, _maskPivot);
+            _image.enabled = false;
             yield return new WaitForSeconds(0.02f);
             endAction.Invoke();
         }
 
         public IEnumerator FadeInCO(bool preserveRatio = false) {
             ReadyTransition();
-            image.enabled = true;
-            yield return _effect.FadeInEffect(mat, referenceCamera, preserveRatio);
+            _image.enabled = true;
+            yield return _effect.FadeInEffect(_mat, referenceCamera, preserveRatio, _maskPivot);
             yield return new WaitForSeconds(0.02f);
             endAction.Invoke();
         }

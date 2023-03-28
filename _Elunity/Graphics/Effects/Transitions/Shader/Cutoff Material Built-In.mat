@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Cutoff Material Built-In
-  m_Shader: {fileID: -6465566751694194690, guid: f7635d27101a3d249b968f4fbd1ecf7c, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 9d344fd5f8689b2408aec026007ffa5d, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -89,7 +89,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Shininess: 0.2
-    - _Slider: 1.0000048
+    - _Slider: -0.000001133536
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

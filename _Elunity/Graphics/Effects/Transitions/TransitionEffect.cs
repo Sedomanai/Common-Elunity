@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 namespace Elang
 {
@@ -17,23 +18,11 @@ namespace Elang
         public bool useMask = false;
         public float maskMaxScale = 3.0f;
         public Texture2D maskTexture;
-        public Transform maskPivot;
-
-        [Header("Particles")]
-        [SerializeField]
-        public bool useParticles = false;
-        public ParticleSystem particles;
-
-        [Header("Animation")]
-        [SerializeField]
-        public bool useAnimation = false;
-        public Animator animator;
-        public AnimationClip animation;
-
+        ParticleSystem _particles;
 
         float _cutoff = 0.0f;
-        //public float cutoff { get; }
-        public void ReadyTransition(Material mat) {
+
+        public void ReadyTransition(Material mat, ParticleSystem particles = null, Animator anim = null, AnimationClip clip = null) {
             if (mat) {
                 mat.SetFloat("_Slider", 1.0f);
                 if (useCutoff) {
@@ -51,21 +40,22 @@ namespace Elang
                 }
             }
 
-            if (useParticles) {
-                particles.gameObject.SetActive(true);
-                var main = particles.main;
+            if (particles) {
+                _particles = particles;
+                _particles.gameObject.SetActive(true);
+                var main = _particles.main;
                 main.simulationSpeed = 1.0f / duration;
-                particles.Play();
+                _particles.Play();
             }
 
-            if (useAnimation) {
-                animator.speed = 1.0f / duration;
-                animator.Play(animation.name, 0);
+            if (anim && clip) {
+                anim.speed = 1.0f / duration;
+                anim.Play(clip.name, 0);
             }
         }
 
 
-        public IEnumerator FadeOutEffect(Material mat, Camera cam, bool preserveRatio) {
+        public IEnumerator FadeOutEffect(Material mat, Camera cam, bool preserveRatio, Transform maskPivot = null) {
             if (useCutoff || useMask) {
                 _cutoff = 1.0f;
                 if (mat)
@@ -94,7 +84,7 @@ namespace Elang
         }
 
 
-        public IEnumerator FadeInEffect(Material mat, Camera cam, bool preserveRatio) {
+        public IEnumerator FadeInEffect(Material mat, Camera cam, bool preserveRatio, Transform maskPivot = null) {
             if (useCutoff || useMask) {
                 _cutoff = 0.0f;
                 if (mat)
@@ -123,10 +113,10 @@ namespace Elang
         }
 
         void StopParticles() {
-            if (useParticles) {
-                particles.Stop();
-                particles.Clear();
-                particles.gameObject.SetActive(false);
+            if (_particles) {
+                _particles.Stop();
+                _particles.Clear();
+                _particles.gameObject.SetActive(false);
             }
         }
 

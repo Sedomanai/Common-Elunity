@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Curtain Material Built-In
-  m_Shader: {fileID: -6465566751694194690, guid: b5872f023ba21b94698324c54b8a41be, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 5e953ec557ce31849abbfea2dfbc264d, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -89,7 +89,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Shininess: 0.2
-    - _Slider: 0
+    - _Slider: -0.00037702767
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

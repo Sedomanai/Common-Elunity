@@ -47,8 +47,8 @@ namespace Elang
         void Start() {
             if (!image)
                 image = GetComponentInChildren<Image>();
-            fadeIn.SetupImage(image);
-            fadeOut.SetupImage(image);
+            fadeIn.Setup(image);
+            fadeOut.Setup(image);
 
             image.gameObject.SetActive(false);
             SetTextActive(false);
