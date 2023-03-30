@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+//[ExecuteInEditMode]
+public class #SCRIPTNAME# : MonoBehaviour
+{
+	void Start() {
+
+    }
+
+    void Update() {
+
+    }
+    
+/**
+    void OnDrawGizmos() {
+
+    }
+    
+    void OnDrawGizmosSelected() { 
+    
+    }
+/**/
+}
+
+/**
+#if UNITY_EDITOR
+[CustomEditor(typeof(#SCRIPTNAME#))]
+public class #SCRIPTNAME#Inspector : Editor
+{
+    #SCRIPTNAME# #SCRIPTNAME#var { get { return target as #SCRIPTNAME#; } }
+
+    public override void OnInspectorGUI() {
+        serializedObject.Update();
+        EditorGUI.BeginChangeCheck();
+
+        // Inspect Here w/ EditorGUILayout Fields
+
+        if (EditorGUI.EndChangeCheck()) {
+            EditorUtility.SetDirty(#SCRIPTNAME#var);
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+        
+    //[DrawGizmo(GizmoType.NonSelected)]
+    static void Draw#SCRIPTNAME#(#SCRIPTNAME# obj, GizmoType type)
+    {
+    }
+
+    void OnSceneGUI() {
+
+    }
+}
+#endif 
+/**/

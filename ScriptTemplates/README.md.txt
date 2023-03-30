@@ -1,0 +1,1 @@
+Copy paste this folder right below the Assets directory in order to use these script templates via the asset creation menu.

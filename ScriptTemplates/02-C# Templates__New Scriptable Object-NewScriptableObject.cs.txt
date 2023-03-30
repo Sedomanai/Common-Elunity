@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+//[CreateAssetMenu(fileName=#SCRIPTNAME#, menuName="Elang/#SCRIPTNAME#", order = 11)]
+public class #SCRIPTNAME# : ScriptableObject
+{
+	
+}
+
+/**
+#if UNITY_EDITOR
+    [CustomEditor(typeof(#SCRIPTNAME#))]
+    public class #SCRIPTNAME#Editor : Editor
+    {
+        #SCRIPTNAME# #SCRIPTNAME#var { get { return target as #SCRIPTNAME#; } }
+
+        public override void OnInspectorGUI() {
+            serializedObject.Update();
+            EditorGUI.BeginChangeCheck();
+
+            // Inspect Here w/ EditorGUILayout Fields
+
+            if (EditorGUI.EndChangeCheck()) {
+                EditorUtility.SetDirty(#SCRIPTNAME#var);
+                serializedObject.ApplyModifiedProperties();
+            }
+        }
+    }
+#endif 
+/**/

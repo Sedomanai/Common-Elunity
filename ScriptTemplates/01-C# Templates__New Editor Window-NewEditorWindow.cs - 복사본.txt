@@ -1,0 +1,26 @@
+#if UNITY_EDITOR
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+
+public class #SCRIPTNAME# : EditorWindow
+{
+    //[MenuItem("Window/Elang/#SCRIPTNAME#")]
+    static void OpenWindow() {
+        #SCRIPTNAME# window = (#SCRIPTNAME#)GetWindow(typeof(#SCRIPTNAME#));
+        //window.minSize = new Vector2(500, 500);
+        window.Show();
+    }
+
+    // Just like Awake/Start, initialize GUI elements such as loading textures
+    void OnEnable() {
+        // Load textures and resources such as GUI-Skin
+    }
+
+    // Show GUI elements in the window
+    void OnGUI() {
+        // EditorGUILayout
+    }
+}
+#endif
