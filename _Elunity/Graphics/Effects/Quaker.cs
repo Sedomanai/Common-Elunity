@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+
+#if UNITY_STANDALONE_WIN
 using DG.Tweening;
+#endif
 using System;
 
 namespace Elang {

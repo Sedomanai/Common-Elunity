@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
+#if UNITY_STANDALONE_WIN
 using DG.Tweening;
+#endif
 
 public class Sequences : MonoBehaviour
 {

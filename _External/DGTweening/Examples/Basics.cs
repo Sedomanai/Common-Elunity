@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
+
+#if UNITY_STANDALONE_WIN
 using DG.Tweening;
+#endif
 
 public class Basics : MonoBehaviour
 {
@@ -8,6 +11,7 @@ public class Basics : MonoBehaviour
 
 	void Start()
 	{
+#if UNITY_STANDALONE_WIN
 		// Initialize DOTween (needs to be done only once).
 		// If you don't initialize DOTween yourself,
 		// it will be automatically initialized with default values.
@@ -27,5 +31,6 @@ public class Basics : MonoBehaviour
 
 		// Voilà.
 		// To see all available shortcuts check out DOTween's online documentation.
+#endif
 	}
 }
