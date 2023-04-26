@@ -11,7 +11,6 @@ namespace Elang
     [Serializable]
     public class ColorVertex
     {
-
         public Color color;
         public Vector3 position;
     }
@@ -44,6 +43,5 @@ namespace Elang
             return Screen.width < 333 ? (16f + 18f) : 16f;
         }
     }
-}
-
 #endif
+}
