@@ -22,16 +22,16 @@ namespace Elang
         public UnityEvent endAction;
 
 
-        Image _image;
+        Renderer _renderer;
         ParticleSystem _particles;
         Animator _anim;
         Material _mat;
 
-        public void Setup(Image image, ParticleSystem particles = null, Animator anim = null) {
-            _image = image;
+        public void Setup(Renderer rend, ParticleSystem particles = null, Animator anim = null) {
+            _renderer = rend;
             _particles = particles;
             _anim = anim;
-            _mat = image.material;
+            _mat = rend.material;
         }
 
         public static void PreserveRatio(Image image) {
@@ -49,16 +49,16 @@ namespace Elang
 
         public IEnumerator FadeOutCO(bool preserveRatio = false, Camera referenceCamera = null, Transform maskPivot = null) {
             ReadyTransition();
-            _image.enabled = true;
+            _renderer.enabled = true;
             yield return _effect.FadeOutEffect(_mat, referenceCamera, preserveRatio, maskPivot);
-            _image.enabled = false;
+            _renderer.enabled = false;
             yield return new WaitForSeconds(0.02f);
             endAction.Invoke();
         }
 
         public IEnumerator FadeInCO(bool preserveRatio = false, Camera referenceCamera = null, Transform maskPivot = null) {
             ReadyTransition();
-            _image.enabled = true;
+            _renderer.enabled = true;
             yield return _effect.FadeInEffect(_mat, referenceCamera, preserveRatio, maskPivot);
             yield return new WaitForSeconds(0.02f);
             endAction.Invoke();

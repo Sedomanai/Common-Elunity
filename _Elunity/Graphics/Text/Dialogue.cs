@@ -10,7 +10,7 @@ namespace Elang
     public class Dialogue : MonoBehaviour
     {
         [SerializeField]
-        Image image;
+        Renderer background;
         [SerializeField]
         TextMeshProUGUI header;
         [SerializeField]
@@ -45,12 +45,12 @@ namespace Elang
         public DialogueScriptableObject dialogue;
         // Start is called before the first frame update
         void Start() {
-            if (!image)
-                image = GetComponentInChildren<Image>();
-            fadeIn.Setup(image);
-            fadeOut.Setup(image);
+            if (!GetComponent<Renderer>())
+                background = GetComponentInChildren<Renderer>();
+            fadeIn.Setup(background);
+            fadeOut.Setup(background);
 
-            image.gameObject.SetActive(false);
+            background.gameObject.SetActive(false);
             SetTextActive(false);
 
             //var dui = map["Dialogue"];
@@ -87,7 +87,7 @@ namespace Elang
         }
 
         void AllFinished() {
-            image.gameObject.SetActive(false);
+            GetComponent<Renderer>().gameObject.SetActive(false);
         }
 
         void SetTextActive(bool value) {
@@ -100,7 +100,7 @@ namespace Elang
         }
 
         public void FadeIn() {
-            image.gameObject.SetActive(true);
+            GetComponent<Renderer>().gameObject.SetActive(true);
             StartCoroutine(fadeIn.FadeInCO());
         }
         public void FadeOut() {

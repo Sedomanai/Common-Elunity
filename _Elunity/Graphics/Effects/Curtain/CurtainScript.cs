@@ -33,14 +33,14 @@ namespace Elang
 
 
         void Start() {
-            Image curtain = GetComponentInChildren<Image>();
+            Image image = GetComponentInChildren<Image>();
+            Renderer rend = GetComponentInChildren<Renderer>();
             Animator anim = GetComponentInChildren<Animator>();
             ParticleSystem particles = GetComponentInChildren<ParticleSystem>();
-
-            fadeIn.Setup(curtain, particles, anim);
-            fadeOut.Setup(curtain, particles, anim);
+            fadeIn.Setup(rend, particles, anim);
+            fadeOut.Setup(rend, particles, anim);
             if (preserveRatio)
-                TransitionEvent.PreserveRatio(curtain);
+                TransitionEvent.PreserveRatio(image);
             if (fadeInImmediately)
                 FadeIn();
         }
