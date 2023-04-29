@@ -17,7 +17,6 @@ namespace Elang
                 Trigger();
             }
         }
-
         void OnEnable() {
             switch (automationType) {
                 case eAutomation.OnEnable:
